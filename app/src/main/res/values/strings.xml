@@ -2,6 +2,6 @@
     <string name="app_name">Smart Agriculture</string>
     <string-array name="examples">
         <item>Smart Agriculture</item>
-        <item>Welcome everyone</item>
+        <item>Welcome Everyone</item>
     </string-array>
 </resources>
