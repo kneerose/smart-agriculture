@@ -83,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseReference myRef = database.getReference("Fan");
 
                 myRef.setValue("ON");
+                on.setBackgroundResource(R.drawable.off);
+                off.setBackgroundResource(R.drawable.on);
 
             }
         });
@@ -93,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseReference myRef = database.getReference("Fan");
 
                 myRef.setValue("OFF");
+                on.setBackgroundResource(R.drawable.on);
+                off.setBackgroundResource(R.drawable.off);
             }
         });
         start.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseReference myRef = database.getReference("Water_pump");
 
                 myRef.setValue("ON");
+                start.setBackgroundResource(R.drawable.off);
+                stop.setBackgroundResource(R.drawable.on);
 
             }
         });
@@ -112,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseReference myRef = database.getReference("Water_pump");
 
                 myRef.setValue("OFF");
+                stop.setBackgroundResource(R.drawable.off);
+                start.setBackgroundResource(R.drawable.on);
             }
         });
         onc.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseReference myRef = database.getReference("Coil");
 
                 myRef.setValue("ON");
+                onc.setBackgroundResource(R.drawable.off);
+                offc.setBackgroundResource(R.drawable.on);
             }
         });
         offc.setOnClickListener(new View.OnClickListener() {
@@ -130,6 +140,8 @@ public class MainActivity extends AppCompatActivity {
                 DatabaseReference myRef = database.getReference("Coil");
 
                 myRef.setValue("OFF");
+                offc.setBackgroundResource(R.drawable.off);
+                onc.setBackgroundResource(R.drawable.on);
             }
         });
         WebView myWebView = findViewById(R.id.webview);

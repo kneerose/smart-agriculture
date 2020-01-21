@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/header"
+        android:background="@color/aqua"
         android:layout_alignParentTop="true"
         >
         <com.tomer.fadingtextview.FadingTextView
@@ -19,7 +20,6 @@
             android:textStyle="bold"
             android:textColor="@color/black"
             app:texts="@array/examples"
-            android:background="@color/aqua"
             app:timeout="3000"
             ></com.tomer.fadingtextview.FadingTextView>
     </RelativeLayout>
@@ -44,9 +44,9 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:id="@+id/topp"
-            android:background="@drawable/ss"
+            android:background="@drawable/suntala"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/day"
                 android:textSize="35dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginLeft="20dp"
                 android:text="sunday"></TextView>
             <TextView
@@ -88,13 +88,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:id="@+id/hr"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 >
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Humidity :"
                     android:paddingLeft="5dp"
+                    android:textColor="@color/yellow"
+                    android:layout_toLeftOf="@+id/humidityv"
                     android:layout_marginLeft="60dp"
                     android:textSize="30dp"
                     android:id="@+id/humidity"
@@ -102,17 +104,20 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/humidity"
+                    android:layout_toLeftOf="@id/p"
                     android:text="10"
                     android:id="@+id/humidityv"
+                    android:textColor="@color/yellow"
                     android:layout_marginLeft="10dp"
                     android:textSize="30dp"></TextView>
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/humidityv"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="20dp"
+                    android:textColor="@color/yellow"
                     android:textSize="30dp"
+                    android:id="@+id/p"
+                    android:layout_alignParentRight="true"
                     android:text="%"></TextView>
             </RelativeLayout>
         </com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout>
@@ -228,6 +233,27 @@
 </RelativeLayout>
         <TextView
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="FOR VEGATABLE PRICE "
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/rc"
+            android:textStyle="bold"
+            android:id="@+id/tt"
+            ></TextView>
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/webview"
+            android:layout_below="@+id/tt"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            ></WebView>
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="FOR VEGETABLE PLANTATION GUIDE"
             android:textStyle="bold"
@@ -236,13 +262,14 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textSize="20dp"
-            android:layout_below="@+id/rc"
+            android:layout_below="@+id/webview"
             ></TextView>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:id="@+id/crr"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_below="@+id/vpg">
         <ImageView
             android:layout_width="wrap_content"
@@ -251,7 +278,7 @@
             android:layout_toLeftOf="@+id/ch"></ImageView>
         <com.jcminarro.roundkornerlayout.RoundKornerRelativeLayout
             android:layout_width="220dp"
-            android:layout_height="60dp"
+            android:layout_height="50dp"
             android:layout_centerInParent="true"
             app:corner_radius="20dp"
             android:id="@+id/ch">
@@ -269,29 +296,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/fingerr"
-            android:layout_toRightOf="@+id/ch"></ImageView>
+            android:layout_toRightOf="@+id/ch"
+            ></ImageView>
         </RelativeLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="FOR VEGATABLE PRICE "
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/crr"
-            android:textStyle="bold"
-            android:id="@+id/tt"
-            ></TextView>
-
-    <WebView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/webview"
-        android:layout_below="@+id/tt"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
-        ></WebView>
     </RelativeLayout>
     </ScrollView>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
