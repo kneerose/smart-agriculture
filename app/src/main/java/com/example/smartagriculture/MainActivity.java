@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    Button on, off;
+    Button on, off,start,stop,onc,offc;
     TextView tempv,humidityv,date,day;
     DatabaseReference temp,hmdty;
 
@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         on = findViewById(R.id.b1);
         off = findViewById(R.id.b2);
+        start =findViewById(R.id.wstart);
+        stop=findViewById(R.id.wstop);
+        onc=findViewById(R.id.c1);
+        offc =findViewById(R.id.c2);
         String date_n = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(new Date());
         date =findViewById(R.id.date);
         date.setText(date_n);
@@ -76,9 +80,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("LED_STATUS");
+                DatabaseReference myRef = database.getReference("Fan");
 
-                myRef.setValue(1);
+                myRef.setValue("ON");
 
             }
         });
@@ -86,9 +90,46 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("LED_STATUS");
+                DatabaseReference myRef = database.getReference("Fan");
 
-                myRef.setValue(0);
+                myRef.setValue("OFF");
+            }
+        });
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Water_pump");
+
+                myRef.setValue("ON");
+
+            }
+        });
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Water_pump");
+
+                myRef.setValue("OFF");
+            }
+        });
+        onc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Coil");
+
+                myRef.setValue("ON");
+            }
+        });
+        offc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("Coil");
+
+                myRef.setValue("OFF");
             }
         });
         WebView myWebView = findViewById(R.id.webview);
@@ -97,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
         myWebView.getSettings().setJavaScriptEnabled(true);
+        myWebView.getSettings().setUserAgentString("Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3");
         myWebView.getSettings().setBuiltInZoomControls(true);
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pulltorefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -114,12 +156,13 @@ public class MainActivity extends AppCompatActivity {
         myWebView.setInitialScale(1);
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
+        myWebView.getSettings().setUserAgentString("Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3");
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setBuiltInZoomControls(true);
     }
 
     public void goToSo(View view) {
-        goToUrl("http://kalimatimarket.gov.np/daily-price-information");
+        goToUrl("https://garden.org/learn/library/foodguide/veggie/#cat301");
     }
 
     private void goToUrl(String url) {
