@@ -2,9 +2,16 @@ package com.example.smartagriculture;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -25,7 +32,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     Button on, off,start,stop,onc,offc;
     TextView tempv,humidityv,date,day;
-    DatabaseReference temp,hmdty;
+    DatabaseReference temp,hmdty,soil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,26 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT);
             }
         });
+        soil =FirebaseDatabase.getInstance().getReference().child("Soil_moisture").child("Value");
+        soil.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String ss=dataSnapshot.getValue(String.class);
+                if (ss.equals("Dry"))
+                {
+                    notificationd();
+                }
+                else if (ss.equals("Wet"))
+                {
+                    notificationw();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getApplicationContext(),"error",Toast.LENGTH_SHORT);
+            }
+        });
         hmdty=FirebaseDatabase.getInstance().getReference().child("humidity").child("Value");
         hmdty.addValueEventListener(new ValueEventListener() {
             @Override
@@ -85,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 myRef.setValue("ON");
                 on.setBackgroundResource(R.drawable.off);
                 off.setBackgroundResource(R.drawable.on);
+
 
             }
         });
@@ -150,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
         myWebView.getSettings().setJavaScriptEnabled(true);
-        myWebView.getSettings().setUserAgentString("Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3");
         myWebView.getSettings().setBuiltInZoomControls(true);
         final SwipeRefreshLayout pullToRefresh = findViewById(R.id.pulltorefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -168,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
         myWebView.setInitialScale(1);
         myWebView.getSettings().setLoadWithOverviewMode(true);
         myWebView.getSettings().setUseWideViewPort(true);
-        myWebView.getSettings().setUserAgentString("Mozilla/5.0 (iPhone; U; CPU like Mac OS X; en) AppleWebKit/420+ (KHTML, like Gecko) Version/3.0 Mobile/1A543a Safari/419.3");
         myWebView.getSettings().setJavaScriptEnabled(true);
         myWebView.getSettings().setBuiltInZoomControls(true);
     }
@@ -182,4 +208,58 @@ public class MainActivity extends AppCompatActivity {
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
         startActivity(launchBrowser);
     }
+    private void notificationw ()
+    {
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this)
+                .setSmallIcon(R.drawable.assistance)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.assistance))
+                .setContentTitle("Alert!!")
+                .setContentText("Soil is Wet")
+                .setAutoCancel(true)
+                .setDefaults(NotificationCompat.DEFAULT_ALL);
+        Uri path =RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(path);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        String CHANNEL_ID = "01";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String name = "Alert";
+           String description = "Soil is Wet";
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name,  NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            notificationManager.createNotificationChannel(channel);
+            builder.setChannelId(CHANNEL_ID);
+        }
+        notificationManager.notify(0,builder.build());
+
+    }
+    private void notificationd ()
+    {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this)
+                .setSmallIcon(R.drawable.assistance)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),R.drawable.assistance))
+                .setContentTitle("Alert!!")
+                .setContentText("Soil is dry")
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setAutoCancel(true);
+        Uri path =RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        builder.setSound(path);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        String CHANNEL_ID = "02";
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String name = "Alert";
+            String description = "Soil is dry";
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name,NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            notificationManager.createNotificationChannel(channel);
+            builder.setChannelId(CHANNEL_ID);
+        }
+        notificationManager.notify(1,builder.build());
+        
+    }
+
 }
